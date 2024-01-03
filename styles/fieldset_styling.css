@@ -1,0 +1,22 @@
+fieldset { /*style fieldset*/
+    background-color: #e3f3f0;
+    border-style:hidden;
+    min-width:30px;
+    word-wrap: break-word; /*to stop words from extending too far*/
+}
+
+input { /*style buttons*/
+    font-size: 12px;
+    background-color: #eeeeee;
+}
+
+form { margin-bottom: 0; } /*get rid of extra space*/
+
+.textbuttongroup { /*for aligning delete button and link text*/
+    display:flex;
+}
+
+.link { /*style small links*/
+    display:inline-block;
+    font-size:13px;
+}

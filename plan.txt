@@ -1,0 +1,10 @@
+- style profile pictures
+    - have them appear in the left of each prompt and response
+    - make it so it doesnt mess up if a text is too long
+- allow poster to allot time for responding
+- try to add support for displaying different timezones
+    - possibly have user table store timezone and be able to update it in edit user (by default it's EST)
+    - how to account for daylight savings??
+        - see if there's a better automatic way
+- add upvotes and downvotes
+    - do it how I said I would in the paper

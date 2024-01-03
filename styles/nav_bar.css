@@ -1,0 +1,17 @@
+ul { /*style unordered list*/
+    margin:0;
+    padding:0;
+    list-style-type:none; /*no bullet points*/
+}
+
+li { /*style the list elements*/
+    float:left;
+}
+
+li a { /*style the links inside of list elements*/
+    background-color: rgb(113, 153, 163);
+    color:rgb(255, 255, 255);
+    /*display: block;*/
+    padding:10px;
+    text-decoration:none; /*no underlines*/
+}

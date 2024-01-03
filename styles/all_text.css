@@ -1,0 +1,10 @@
+* { /*Specify font for entire website*/
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.allow_newlines { /*Class used for larger walls of text*/
+    white-space: pre-line;
+    overflow:hidden;
+}
+
+
