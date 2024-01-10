@@ -2,6 +2,27 @@
 
 <script type="text/javascript" src="../../scripts/post_char_amts.js"></script>
 
+    <style>
+
+        .container {
+        display: flex;
+        }
+
+        .left-box {
+        flex: 0;
+        padding: 5px;
+        text-align: center;
+        font-size: 13;
+        
+        }
+
+        .right-box {
+        flex: 2;
+        padding: 10px;
+        }
+
+    </style>
+
     <link rel='stylesheet' href='../../styles/fieldset_styling.css'>
     <link rel='stylesheet' href='../../styles/nav_bar.css'>
 
@@ -72,16 +93,36 @@
 
                 if (!$showEditPromptForm) { // regular view
 
-                    echo "<span class=allow_newlines>$prompt</span>";
-                    echo "<br><div class='textbuttongroup'> <font size='-1'>Posted by $posterUsername";
-                    //echo " | $echoTimestamp ($timeStr)";
-                    echo " $timeStr";
-                    if ($uid==$posterID && $showEdit) {
-                        echo"&nbsp&nbsp|&nbsp&nbsp</font> <form method='post' action=prompt.php?action=editPrompt&idPrompts=$idPrompts>
-                        <input type='submit' value='Edit'></form>";
-                    } else {
-                        echo "</font>";
-                    }
+                    echo "<div class =  'container'>";
+
+                    echo "<div class = 'left-box'>";
+
+                        if ($posterPfp !=null) {
+                            $path = "../../images/".$posterPfp;
+                            echo "<img style='float: left;' src=$path width=90 height=90>";
+                        } else {
+                            $path = "../../images/defaultProfilePic.png";
+                            echo "<img style='float: left;' src=$path width=90 height=90>";
+                        }
+
+                        echo "<br><br><br><br><br><br><br><a href='../user/user.php?userID=$posterID'>$posterUsername</a>";
+
+                    echo "</div>"; // left box
+
+                    echo "<div class = 'right-box'>";
+
+                        echo "<span class=allow_newlines>$prompt</span><br>";
+                        echo "<br><div class='textbuttongroup'> <font size=-1> $timeStr";
+                        if ($uid==$posterID && $showEdit) {
+                            echo"&nbsp&nbsp|&nbsp&nbsp</font> <form method='post' action=prompt.php?action=editPrompt&idPrompts=$idPrompts>
+                            <input type='submit' value='Edit'></form>";
+                        } else {
+                            echo "</font>";
+                        }
+                        echo "</div>";
+
+                    echo "</div>"; // right box
+
                     echo "</div>";
 
                 } else { // editing view
@@ -109,27 +150,43 @@
 
         <?php
             if ($topVotedResponse != null) {
+
             echo "<br><br>Winner:";
+
             echo "<br><br><fieldset> ";
 
-            if ($topVotedUserPfp !=null) {
-                $path = "../../images/".$topVotedUserPfp;
-                echo "<img style='float: left;margin: 0 15px 0 0;' src=$path width=90 height=90>";
-            } else {
-                $path = "../../images/defaultProfilePic.png";
-                echo "<img src=$path width=50 height=50>";
-            }
+            echo "<div class = 'container'>";
 
-            if ($type == 'Writing') {
-                echo "<span class='allow_newlines'>$topVotedResponse</span><br>";
-            } else {
-                $path = "../../images/".$topVotedResponse;
-                echo "<img src=$path width=200>";
-            }
+            echo "<div class = 'left-box'>";
 
-            echo "<br> 
-            <font size='-1'>Response by <a href='../user/user.php?userID=$topVotedUserID'>$topVotedUser</a></font>
-            </fieldset>";
+                if ($topVotedUserPfp !=null) {
+                    $path = "../../images/".$topVotedUserPfp;
+                    echo "<img src=$path width=90 height=90>";
+                } else {
+                    $path = "../../images/defaultProfilePic.png";
+                    echo "<img src=$path width=90 height=90>";
+                }
+
+                echo "<br><br><a href='../user/user.php?userID=$topVotedUserID'>$topVotedUser</a>";
+
+            echo "</div>"; // left box
+
+            echo "<div class = 'right-box'>";
+
+                if ($type == 'Writing') {
+                    echo "<span class='allow_newlines'>$topVotedResponse</span><br>";
+                } else {
+                    $path = "../../images/".$topVotedResponse;
+                    echo "<img src=$path width=200>";
+                }
+
+                echo "<br>";
+
+            echo "</div>"; // right box
+
+
+            echo "</div>"; // container
+            echo "</fieldset>";
             }
 
         ?>
@@ -220,48 +277,66 @@
                 }
 
                 $responderUsername = $usersModel->getUsernameFromID($responderID);
+                $responderPfp = $usersModel->getProfilePicture($responderID);
                 $numVotes = $votesModel->getVoteCountFromResponseID($idResponses);
 
                 if ($idResponses != $responseToEdit) { // regular view
 
-                    echo "
-                    <fieldset>";
+                    echo "<fieldset>";
 
-                    if ($type == "Writing") {
-                        echo "<br><span class=allow_newlines>$response</span>";
-                    } else {
-                        $path = "../../images/".$response;
-                        echo "<img src=$path width=200>"; // scales down image preserving aspect ratio
-                    }
+                    echo "<div class = 'container'>";
 
-                    // if it's the user's response display View Votes instead of Vote as they can't vote on their own response
-                    if ($uid==$responderID) {$votestr = "View Votes";}
-                    else {$votestr = "Vote";}
+                    echo "<div class = 'left-box'>";
 
-                    echo "
-                    <br><br>
-                    <font size='-1'>Response by <a href='../user/user.php?userID=$responderID'>$responderUsername</a>";
-                    //echo" | $echoTimestamp ($timeStr)";
-                    echo " $timeStr";
-                    echo "
-                    </font>
-                    <br><br>
-
-                    <div class='textbuttongroup'>
-
-                    <span class=link'>Votes: $numVotes | <a href='../votes/votes.php?responseID=$idResponses&userID=$responderID&type=$type&promptID=$idPrompts'>$votestr</a></span>";
-
-                    if ($uid==$responderID) {
-
-                        if ($type=="Writing" && $showEdit) {
-                            echo"&nbsp&nbsp|&nbsp&nbsp <form method='post' action=prompt.php?action=editResponse&idPrompts=$idPrompts&responseID=$idResponses>
-                            <input type='submit' value='Edit'></form>";
+                        if ($responderPfp !=null) {
+                            $path = "../../images/".$responderPfp;
+                            echo "<img style='float: left;' src=$path width=90 height=90>";
+                        } else {
+                            $path = "../../images/defaultProfilePic.png";
+                            echo "<img style='float: left;' src=$path width=90 height=90>";
                         }
 
-                        echo"&nbsp&nbsp|&nbsp&nbsp <form method='post' action=prompt.php?action=deleteResponse&idPrompts=$idPrompts&responseID=$idResponses>
-                        <input type='submit' value='Delete'></form>";
-                    }
-                    echo "</div>";
+                        echo "<br><br><br><br><br><br><br><a href='../user/user.php?userID=$responderID'>$responderUsername</a>";
+
+                    echo "</div>"; // left box
+
+                    echo "<div class = 'right-box'>";
+
+                        if ($type == "Writing") {
+                            echo "<br><span class=allow_newlines>$response</span>";
+                        } else {
+                            $path = "../../images/".$response;
+                            echo "<img src=$path width=200>"; // scales down image preserving aspect ratio
+                        }
+
+                        // if it's the user's response display View Votes instead of Vote as they can't vote on their own response
+                        if ($uid==$responderID) {$votestr = "View Votes";}
+                        else {$votestr = "Vote";}
+
+                        echo "
+                        <br><br>
+                        <font size='-1'>Responsed $timeStr";
+                        echo "
+                        </font>
+                        <br><br>
+
+                        <div class='textbuttongroup'>
+
+                        <span style = 'font-size:13'><span class=link'> Votes: $numVotes | <a href='../votes/votes.php?responseID=$idResponses&userID=$responderID&type=$type&promptID=$idPrompts'>$votestr</a></span></span>";
+
+                        if ($uid==$responderID) {
+
+                            if ($type=="Writing" && $showEdit) {
+                                echo"&nbsp&nbsp<span style = 'font-size:13'>|</span>&nbsp&nbsp <form method='post' action=prompt.php?action=editResponse&idPrompts=$idPrompts&responseID=$idResponses>
+                                <input type='submit' value='Edit'></form>";
+                            }
+
+                            echo"&nbsp&nbsp<span style = 'font-size:13'>|</span>&nbsp&nbsp <form method='post' action=prompt.php?action=deleteResponse&idPrompts=$idPrompts&responseID=$idResponses>
+                            <input type='submit' value='Delete'></form>";
+                        }
+                        echo "</div>";
+
+                    echo "</div>"; // right box
 
                     echo"
                     </fieldset><br>

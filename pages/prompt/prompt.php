@@ -26,6 +26,7 @@ $type = $promptInfo['type'];
 $posterID = $promptInfo['posterID'];
 $timePosted = $promptInfo['timePosted'];
 $posterUsername = $usersModel->getUsernameFromID($posterID);
+$posterPfp = $usersModel->getProfilePicture($posterID);
 
 $timestamp = strtotime($timePosted);
 $echoTimestamp = date('F j, Y g:i A', $timestamp);

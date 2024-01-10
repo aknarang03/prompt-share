@@ -1,5 +1,26 @@
 <html>
 
+    <style>
+
+        .container {
+        display: flex;
+        }
+
+        .left-box {
+        flex: 0;
+        padding: 5px;
+        text-align: center;
+        font-size: 13;
+        
+        }
+
+        .right-box {
+        flex: 2;
+        padding: 10px;
+        }
+
+    </style>
+
     <link rel='stylesheet' href='../../styles/fieldset_styling.css'>
     <link rel='stylesheet' href='../../styles/nav_bar.css'>
 
@@ -47,37 +68,49 @@
 
                 echo "<fieldset>";
 
-                if ($profilePic !=null) {
-                    $path = "../../images/".$profilePic;
-                    echo "<img style='float: left; margin: 5px 15px 5px 0px;' src=$path width=90 height=90>";
-                } else {
-                    $path = "../../images/defaultProfilePic.png";
-                    echo "<img style='float: left; margin: 5px 15px 5px 0px;' src=$path width=90 height=90>";
-                }
+                echo "<div class='container'>";
 
+                echo "<div class = 'left-box'>";
+
+                    if ($profilePic !=null) {
+                        $path = "../../images/".$profilePic;
+                        echo "<img style='float: left;' src=$path width=90 height=90>";
+                    } else {
+                        $path = "../../images/defaultProfilePic.png";
+                        echo "<img style='float: left;' src=$path width=90 height=90>";
+                    }
+
+                    echo "<br><br><br><br><br><br><br><a href='../user/user.php?userID=$posterID'>$username</a>"; 
+
+                echo "</div>
+
+                <div class = 'right-box'>";
                 
-                if ($type == "Writing") {
-                    echo "<span style = 'font-size:14 '>Writing Prompt</span>";
-                } else {
-                    echo "<span style = 'font-size:14 '>Drawing Prompt</span>";
-                }
+                    if ($type == "Writing") {
+                        echo "<span style = 'font-size:14 '>Writing Prompt</span>";
+                    } else {
+                        echo "<span style = 'font-size:14 '>Drawing Prompt</span>";
+                    }
 
-                echo "
-                
-                <div style = 'font-size:12 '>
-                Posted by <a href='../user/user.php?userID=$posterID'>$username</a> | $echoTimestamp
-                </div>
+                    echo "
+                    
+                    <div style = 'font-size:12 '>
+                    Posted $echoTimestamp
+                    </div>
 
-                <br>
-                <span class='allow_newlines'>$prompt</span>
-                <br><br>
+                    <br>
+                    <span class='allow_newlines'>$prompt</span>
+                    <br><br>
 
-                <div class='textbuttongroup'>
-                <span class='link'><a href='../prompt/prompt.php?idPrompts=$idPrompts'>Responses ($responseCount)</a></span>";
-                if ($uid==$posterID) {
-                    echo"&nbsp&nbsp|&nbsp&nbsp <form method='post' action=prompts.php?action=deletePrompt&promptID=$idPrompts>
-                    <input type='submit' value='Delete'></form>";
-                }
+                    <div class='textbuttongroup'>
+                    <span class='link'><a href='../prompt/prompt.php?idPrompts=$idPrompts'>Responses ($responseCount)</a></span>";
+                    if ($uid==$posterID) {
+                        echo"&nbsp&nbsp|&nbsp&nbsp <form method='post' action=prompts.php?action=deletePrompt&promptID=$idPrompts>
+                        <input type='submit' value='Delete'></form>";
+                    }
+                    
+                    echo "</div>";
+
                 echo "</div>";
                 
                 echo "
