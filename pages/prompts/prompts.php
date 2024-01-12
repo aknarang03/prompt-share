@@ -17,6 +17,7 @@ if (!isset($_SESSION['uid'])){
 
 $loggedInUser = $_SESSION['displayName'];
 $uid = $_SESSION['uid'];
+$userTimezone = $usersModel->getTimezoneFromID($uid);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

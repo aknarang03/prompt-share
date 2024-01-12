@@ -60,8 +60,9 @@
                 $prompt = $currentPrompt["prompt"];
 
                 $timePosted = $currentPrompt["timePosted"];
-                $timestamp = strtotime($timePosted);
-                $echoTimestamp = date('F j, Y g:i A', $timestamp);
+                $datetime = new DateTime($timePosted,new DateTimeZone("America/New_York"));
+                $datetime->setTimezone(new DateTimeZone($userTimezone));
+                $echoTimestamp = $datetime->format('F j, Y g:i A');
 
                 $username = $usersModel->getUsernameFromID($posterID);
                 $profilePic = $usersModel->getProfilePicture($posterID);

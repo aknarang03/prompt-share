@@ -11,7 +11,6 @@ if (!isset($_SESSION['uid'])){
 }
 
 $uid = $_SESSION['uid'];
-$userTimezone = $usersModel->getTimezoneFromID($uid);
 
 $promptsModel = new PromptsModel();
 $responsesModel = new ResponsesModel();
@@ -29,6 +28,7 @@ $timePosted = $promptInfo['timePosted'];
 $posterUsername = $usersModel->getUsernameFromID($posterID);
 $posterPfp = $usersModel->getProfilePicture($posterID);
 
+$userTimezone = $usersModel->getTimezoneFromID($uid);
 $timestamp = strtotime($timePosted);
 $echoTimestamp = date('F j, Y g:i A', $timestamp);
 

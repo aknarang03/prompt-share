@@ -112,7 +112,7 @@
                     echo "<div class = 'right-box'>";
 
                         echo "<span class=allow_newlines>$prompt</span><br>";
-                        echo "<br><div class='textbuttongroup'> <font size=-1> $timeStr";
+                        echo "<br><div class='textbuttongroup'> <font size=-1> Posted $timeStr";
                         if ($uid==$posterID && $showEdit) {
                             echo"&nbsp&nbsp|&nbsp&nbsp</font> <form method='post' action=prompt.php?action=editPrompt&idPrompts=$idPrompts>
                             <input type='submit' value='Edit'></form>";
@@ -315,7 +315,7 @@
 
                         echo "
                         <br><br>
-                        <font size='-1'>Responsed $timeStr";
+                        <font size='-1'>Responded $timeStr";
                         echo "
                         </font>
                         <br><br>
