@@ -1,5 +1,6 @@
 <html>
 
+
     <style>
 
         .container {
@@ -46,7 +47,7 @@
         <h3> Prompts </h3>
         
         <div style = 'font-style:italic '>
-        Hello, <?=$loggedInUser?><br><br>
+            Hello, <?=$loggedInUser?><br><br>
         </div>
 
         <?php

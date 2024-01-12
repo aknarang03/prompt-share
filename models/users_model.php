@@ -43,9 +43,48 @@ class UsersModel {
 
     }
 
+    function updateTimezone($timezone) {
+
+        try {
+    
+            $this->db->beginTransaction();
+            
+            $stmt = $this->db->prepare('UPDATE users 
+            SET timezone=:timezone 
+            WHERE idUsers=:idUsers');
+            
+            $userID = $_SESSION['uid']; // get logged in user's ID
+
+            $stmt->bindParam(':timezone',$timezone,PDO::PARAM_STR);
+            $stmt->bindParam(':idUsers',$userID,PDO::PARAM_INT);
+
+            $stmt->execute();
+            $this->db->commit();
+
+            return true;
+
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+            $this->db->rollBack();
+            return false;
+        }
+
+    }
+
     function getUsernameFromID($idUsers) {
         try {
             $stmt = $this->db->prepare('SELECT displayName FROM users WHERE idUsers=:idUsers');
+            $stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch(PDOException $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    function getTimezoneFromID($idUsers) {
+        try {
+            $stmt = $this->db->prepare('SELECT timezone FROM users WHERE idUsers=:idUsers');
             $stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchColumn();
@@ -83,8 +122,8 @@ class UsersModel {
             $this->db->beginTransaction();
         
             $stmtUser = $this->db->prepare(
-                "INSERT INTO users(displayName) 
-                VALUES(:displayName)"
+                "INSERT INTO users(displayName,timezone) 
+                VALUES(:displayName,:timezone)"
             );
 
             $stmtCredential = $this->db->prepare(
@@ -92,7 +131,10 @@ class UsersModel {
                 VALUES(:email,:username,PASSWORD(:password),:userID)"
             );
 
-            $stmtUser->execute(array(':displayName' => $username));
+            $stmtUser->execute(array(
+                ':displayName' => $username,
+                ':timezone' => "America/New_York"
+            ));
 
             $uid = $this->db->lastInsertId();
 

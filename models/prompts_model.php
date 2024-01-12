@@ -45,8 +45,9 @@ class PromptsModel {
 
     function addPrompt ($type,$prompt) { 
 
-        $tz = new DateTimeZone('America/New_York');
-        $dateTime = new DateTime('now', $tz);
+        $timezone = new DateTimeZone('America/New_York');
+        
+        $dateTime = new DateTime('now', $timezone);
         $timePosted = $dateTime->format('Y-m-d H:i:s');
 
         try {

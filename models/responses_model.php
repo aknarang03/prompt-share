@@ -86,8 +86,9 @@ class ResponsesModel {
 
     function addWritingResponse ($promptID, $textResponse) { 
 
-        $tz = new DateTimeZone('America/New_York');
-        $dateTime = new DateTime('now', $tz);
+        $timezone = new DateTimeZone('America/New_York');
+        
+        $dateTime = new DateTime('now', $timezone);
         $timePosted = $dateTime->format('Y-m-d H:i:s');
 
         try {
@@ -120,8 +121,9 @@ class ResponsesModel {
 
     function addDrawingResponse ($promptID, $imgResponseFilename) { 
 
-        $tz = new DateTimeZone('America/New_York');
-        $dateTime = new DateTime('now', $tz);
+        $timezone = new DateTimeZone('America/New_York');
+
+        $dateTime = new DateTime('now', $timezone);
         $timePosted = $dateTime->format('Y-m-d H:i:s');
 
         try {

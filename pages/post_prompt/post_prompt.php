@@ -1,10 +1,12 @@
 <?php
+
 require_once '../../models/prompts_model.php';
+//require_once '../../models/users_model.php';
 
 $promptsModel = new PromptsModel();
+//$usersModel = new UsersModel();
 
 $message = "";
-
 $type = "";
 $prompt="";
 
@@ -14,6 +16,7 @@ if (!isset($_SESSION['uid'])){
 }
 
 $uid = $_SESSION['uid'];
+//$userTimezone = $usersModel->getTimezoneFromID($uid);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

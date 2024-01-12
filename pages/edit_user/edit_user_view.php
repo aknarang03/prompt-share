@@ -15,6 +15,22 @@
 
     <h3>User Settings</h3>
 
+    <form method="post" action=edit_user.php?action=updateTimezone>
+
+        Timezone:
+        <select name = "timezone" id = "timezone">
+        <?php 
+            foreach ($tzlist as $tz) {
+                echo "<option value=$tz>$tz</option>";
+            }
+        ?>
+        </select>
+            
+        <input type="submit" value="Update">
+        <br><br>
+
+    </form>
+
     <form method="post" action=edit_user.php?action=updateEmail onSubmit="return validateEmail(this)">
 
         <fieldset>

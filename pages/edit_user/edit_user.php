@@ -12,6 +12,8 @@ $uid = $_SESSION['uid'];
 $credentialsModel = new CredentialsModel();
 $usersModel = new UsersModel();
 
+$tzlist = timezone_identifiers_list();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $emailTaken = false;
@@ -47,6 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $message = "Update Failed";
                 }
+            }
+
+        }
+
+        else if ($getvars["action"] == 'updateTimezone') {
+
+            $timezone = $_POST['timezone'];
+    
+            $result = $usersModel->updateTimezone($timezone);
+            if ($result) {
+                $message = "Timezone Updated";
+                header('Location: ../login/login.php?action=logout');
+            } else {
+                $message = "Update Timezone Failed";
             }
 
         }
@@ -122,7 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
     }
-} 
+
+}
 
 function saveFile($unique) {
     $targetDir = "../../images/";

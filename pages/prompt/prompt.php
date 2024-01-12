@@ -11,6 +11,7 @@ if (!isset($_SESSION['uid'])){
 }
 
 $uid = $_SESSION['uid'];
+$userTimezone = $usersModel->getTimezoneFromID($uid);
 
 $promptsModel = new PromptsModel();
 $responsesModel = new ResponsesModel();
