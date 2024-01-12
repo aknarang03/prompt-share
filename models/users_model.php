@@ -7,6 +7,7 @@ class UsersModel {
     function __construct() {
         try {
             $this->db = new PDO('mysql:host=localhost;port=8889;dbname=prompts_db;charset=utf8', 'promptsiteuser', 'siteuserpass1');
+            //$this->db = new PDO('mysql:host=files.000webhost.com;port=8889;dbname=prompts_db;charset=utf8', 'promptsiteuser', 'siteuserpass1');
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch (PDOException $e) {
