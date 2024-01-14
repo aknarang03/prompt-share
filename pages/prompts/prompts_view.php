@@ -47,11 +47,10 @@
         <h3> Prompts </h3>
         
         <div style = 'font-style:italic '>
-            Hello, <?=$loggedInUser?><br>
+            Hello, <?=$loggedInUser?><br><br>
         </div>
 
         <label for="promptType">Prompt type:</label>
-
         <form method="post" action=prompts.php?action=filter>
             <select name="promptType" id="promptType" onchange="this.form.submit()">
                 <?php
@@ -100,56 +99,60 @@
                 $profilePic = $usersModel->getProfilePicture($posterID);
                 $responseCount = $responsesModel->getResponseCountFromPromptID($idPrompts);
 
-                echo "<fieldset>";
+                if ($filterBy=="Any" || $filterBy=="Writing"&&$type=="Writing" || $filterBy=="Drawing"&&$type=="Drawing") {
 
-                echo "<div class='container'>";
+                    echo "<fieldset>";
 
-                echo "<div class = 'left-box'>";
+                    echo "<div class='container'>";
 
-                    if ($profilePic !=null) {
-                        $path = "../../images/".$profilePic;
-                        echo "<img style='float: left;' src=$path width=90 height=90>";
-                    } else {
-                        $path = "../../images/defaultProfilePic.png";
-                        echo "<img style='float: left;' src=$path width=90 height=90>";
-                    }
+                    echo "<div class = 'left-box'>";
 
-                    echo "<br><br><br><br><br><br><br><a href='../user/user.php?userID=$posterID'>$username</a>"; 
+                        if ($profilePic !=null) {
+                            $path = "../../images/".$profilePic;
+                            echo "<img style='float: left;' src=$path width=90 height=90>";
+                        } else {
+                            $path = "../../images/defaultProfilePic.png";
+                            echo "<img style='float: left;' src=$path width=90 height=90>";
+                        }
 
-                echo "</div>
+                        echo "<br><br><br><br><br><br><br><a href='../user/user.php?userID=$posterID'>$username</a>"; 
 
-                <div class = 'right-box'>";
-                
-                    if ($type == "Writing") {
-                        echo "<span style = 'font-size:14 '>Writing Prompt</span>";
-                    } else {
-                        echo "<span style = 'font-size:14 '>Drawing Prompt</span>";
-                    }
+                    echo "</div>
 
-                    echo "
+                    <div class = 'right-box'>";
                     
-                    <div style = 'font-size:12 '>
-                    Posted $echoTimestamp
-                    </div>
+                        if ($type == "Writing") {
+                            echo "<span style = 'font-size:14 '>Writing Prompt</span>";
+                        } else {
+                            echo "<span style = 'font-size:14 '>Drawing Prompt</span>";
+                        }
 
-                    <br>
-                    <span class='allow_newlines'>$prompt</span>
-                    <br><br>
+                        echo "
+                        
+                        <div style = 'font-size:12 '>
+                        Posted $echoTimestamp
+                        </div>
 
-                    <div class='textbuttongroup'>
-                    <span class='link'><a href='../prompt/prompt.php?idPrompts=$idPrompts'>Responses ($responseCount)</a></span>";
-                    if ($uid==$posterID) {
-                        echo"&nbsp&nbsp|&nbsp&nbsp <form method='post' action=prompts.php?action=deletePrompt&promptID=$idPrompts>
-                        <input type='submit' value='Delete'></form>";
-                    }
-                    
+                        <br>
+                        <span class='allow_newlines'>$prompt</span>
+                        <br><br>
+
+                        <div class='textbuttongroup'>
+                        <span class='link'><a href='../prompt/prompt.php?idPrompts=$idPrompts'>Responses ($responseCount)</a></span>";
+                        if ($uid==$posterID) {
+                            echo"&nbsp&nbsp|&nbsp&nbsp <form method='post' action=prompts.php?action=deletePrompt&promptID=$idPrompts>
+                            <input type='submit' value='Delete'></form>";
+                        }
+                        
+                        echo "</div>";
+
                     echo "</div>";
+                    
+                    echo "
+                    </fieldset><br>
+                    ";
 
-                echo "</div>";
-                
-                echo "
-                </fieldset><br>
-                ";
+                    }
 
             }
 

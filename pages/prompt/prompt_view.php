@@ -127,9 +127,6 @@
 
                 } else { // editing view
 
-                    //onSubmit='return checkPrompt(this)'
-                    //<input type='submit' name='button' value='Cancel'>
-
                     echo "
                     <form method='post' action=prompt.php?action=completePromptEdit&idPrompts=$idPrompts onSubmit='return checkPrompt(this)'> 
                     <fieldset><legend>Edit Prompt</legend>
