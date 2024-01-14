@@ -47,8 +47,40 @@
         <h3> Prompts </h3>
         
         <div style = 'font-style:italic '>
-            Hello, <?=$loggedInUser?><br><br>
+            Hello, <?=$loggedInUser?><br>
         </div>
+
+        <label for="promptType">Prompt type:</label>
+
+        <form method="post" action=prompts.php?action=filter>
+            <select name="promptType" id="promptType" onchange="this.form.submit()">
+                <?php
+                switch ($filterBy) {
+                    case ("Any"):
+                        echo '
+                        <option value="Any" selected>Any</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Drawing">Drawing</option>
+                        ';
+                        break;
+                    case ("Writing"):
+                        echo '
+                        <option value="Any">Any</option>
+                        <option value="Writing" selected>Writing</option>
+                        <option value="Drawing">Drawing</option>
+                        ';
+                        break;
+                    case ("Drawing"):
+                        echo '
+                        <option value="Any">Any</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Drawing" selected>Drawing</option>
+                        ';
+                        break;
+                }
+                ?>
+            </select> <br><br>
+        </form>
 
         <?php
 

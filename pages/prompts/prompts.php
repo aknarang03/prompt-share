@@ -19,6 +19,8 @@ $loggedInUser = $_SESSION['displayName'];
 $uid = $_SESSION['uid'];
 $userTimezone = $usersModel->getTimezoneFromID($uid);
 
+$filterBy = "Any";
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -38,6 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $message = "Delete Prompt Failed";
                 }
                 
+        }
+
+        if ($getvars["action"] == 'filter') {
+
+            $filterBy = $_POST['promptType'];
+            //header('Location: ../prompts/prompts.php');
+            //echo $filterBy;
+
+            // DO THE FILTERING
 
         }
 
