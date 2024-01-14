@@ -24,16 +24,21 @@ $response = $responsesModel->getResponseFromID($responseID,$type);
 $uid = $_SESSION['uid'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST['Downvote'])) { $voteType = "Downvote"; } // order of checks important here
+    else { $voteType = "Upvote"; }
  
     $feedback = $_POST['feedback'];
-    $result = $votesModel->vote($feedback,$responseID);
+    $result = $votesModel->vote($feedback,$responseID,$voteType);
 
     if ($result) {
+        if ($voteType == "Upvote") { $responsesModel->voteUp($responseID); } 
+        else { $responsesModel->voteDown($responseID); }
         $message = "Response Successful";
         echo "<meta http-equiv='refresh' content='0'>";
     } else {
         // if the result failed, it's likely because of the unique index on responseID + voterID
-        $message = "Vote Failed. You may have already voted for this response.";
+        $message = "Vote Failed. You may have already voted on this response.";
     }
     
 } 

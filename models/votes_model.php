@@ -28,14 +28,14 @@ class VotesModel {
         return count($this->votes);  
     }
 
-    function vote ($feedback, $responseID) { 
+    function vote ($feedback, $responseID, $voteType) { 
         try {
     
             $this->db->beginTransaction();
             
             $stmtVote = $this->db->prepare(
-                "INSERT INTO votes(feedback,voterID,responseID)  
-                VALUES(:feedback,:voterID,:responseID)" 
+                "INSERT INTO votes(feedback,voterID,responseID,voteType)  
+                VALUES(:feedback,:voterID,:responseID,:voteType)" 
             );
 
             $voterID = $_SESSION['uid'];
@@ -43,7 +43,8 @@ class VotesModel {
             $stmtVote->execute(array(
                 ':feedback' => $feedback,
                 ':voterID' => $voterID,
-                ':responseID' => $responseID
+                ':responseID' => $responseID,
+                ':voteType' => $voteType
             ));
 
             $this->db->commit();

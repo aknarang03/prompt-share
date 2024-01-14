@@ -38,7 +38,8 @@
 
                 echo "
                 <textarea id='feedback' name='feedback' rows='1' cols='30' value='Optional Feedback'></textarea>
-                <br><input type='submit' value='Vote'><br><br><br>
+                <br><div class='textbuttongroup'><input type='submit' name='Upvote' value='Upvote'><input type='submit' name='Downvote' value='Downvote'><br><br><br>
+                </div>
                 ";
             }
         

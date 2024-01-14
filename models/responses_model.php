@@ -15,6 +15,67 @@ class ResponsesModel {
         }
     }
 
+    function voteUp($idResponses){
+
+        try {
+    
+            $this->db->beginTransaction();
+            
+            $stmt = $this->db->prepare('UPDATE responses 
+            SET score = score + 1
+            WHERE idResponses=:idResponses');
+
+            $stmt->bindParam(':idResponses',$idResponses,PDO::PARAM_INT);
+
+            $stmt->execute();
+            $this->db->commit();
+
+            return true;
+
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+            $this->db->rollBack();
+            return false;
+        }
+
+    }
+
+    function voteDown($idResponses){
+
+        try {
+    
+            $this->db->beginTransaction();
+            
+            $stmt = $this->db->prepare('UPDATE responses 
+            SET score = score - 1
+            WHERE idResponses=:idResponses');
+
+            $stmt->bindParam(':idResponses',$idResponses,PDO::PARAM_INT);
+
+            $stmt->execute();
+            $this->db->commit();
+
+            return true;
+
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+            $this->db->rollBack();
+            return false;
+        }
+
+    }
+
+    function getScoreFromID($idResponses) {
+        try {
+            $stmt = $this->db->prepare('SELECT score FROM responses WHERE idResponses=:idResponses');
+            $stmt->bindParam(':idResponses', $idResponses, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch(PDOException $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
     function getResponderFromID($idResponses) {
         try {
             $stmt = $this->db->prepare('SELECT responderID FROM responses WHERE idResponses=:idResponses');
@@ -96,8 +157,8 @@ class ResponsesModel {
             $this->db->beginTransaction();
             
             $stmtResponse = $this->db->prepare(
-                "INSERT INTO responses(responderID,promptID,textResponse,timePosted)  
-                VALUES(:responderID,:promptID,:textResponse,:timePosted)" 
+                "INSERT INTO responses(responderID,promptID,textResponse,timePosted,score)  
+                VALUES(:responderID,:promptID,:textResponse,:timePosted,:score)" 
             );
 
             $responderID = $_SESSION['uid']; // get logged in user's ID
@@ -106,7 +167,8 @@ class ResponsesModel {
                 ':responderID' => $responderID,
                 ':promptID' => $promptID,
                 ':textResponse' => $textResponse,
-                ':timePosted' => $timePosted
+                ':timePosted' => $timePosted,
+                ':score' => 0
             ));
 
             $this->db->commit();
@@ -131,8 +193,8 @@ class ResponsesModel {
             $this->db->beginTransaction();
             
             $stmtResponse = $this->db->prepare(
-                "INSERT INTO responses(responderID,promptID,imgResponseFilename,timePosted)  
-                VALUES(:responderID,:promptID,:imgResponseFilename,:timePosted)"
+                "INSERT INTO responses(responderID,promptID,imgResponseFilename,timePosted,score)  
+                VALUES(:responderID,:promptID,:imgResponseFilename,:timePosted,:score)"
             );
 
             $responderID = $_SESSION['uid']; // get logged in user's ID
@@ -141,7 +203,8 @@ class ResponsesModel {
                 ':responderID' => $responderID,
                 ':promptID' => $promptID,
                 ':imgResponseFilename' => $imgResponseFilename,
-                ':timePosted' => $timePosted
+                ':timePosted' => $timePosted,
+                ':score' => 0
             ));
 
             $this->db->commit();
