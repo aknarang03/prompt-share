@@ -54,14 +54,21 @@
                 $idVotes = $currentVote["idPrompts"];
                 $feedback = $currentVote["feedback"];
                 $voterID = $currentVote["voterID"];
+                $voteType = $currentVote["voteType"];
                 $responseID = $currentPrompt["responseID"];
 
                 $username = $usersModel->getUsernameFromID($voterID);
 
                 echo "<fieldset>";
 
+                if ($voteType == "Upvote") {
+                    $votestr = "upvoted";
+                } else {
+                    $votestr = "downvoted";
+                }
+
                 echo "
-                <a href='../user/user.php?userID=$voterID'>$username</a> voted
+                <a href='../user/user.php?userID=$voterID'>$username</a> $votestr
                 <br>
                 $feedback
                 <br>

@@ -243,7 +243,7 @@ class ResponsesModel {
 
         if ($type == "Writing") {
             try {
-                $stmt = $this->db->query("SELECT r.idResponses, r.responderID, r.promptID, r.textResponse, r.timePosted
+                $stmt = $this->db->query("SELECT r.idResponses, r.responderID, r.promptID, r.textResponse, r.timePosted, r.score
                     FROM responses r
                     JOIN prompts p ON r.promptID = p.idPrompts
                     WHERE p.idPrompts = '$promptID'"

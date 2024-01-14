@@ -227,6 +227,7 @@
 
                 $idResponses = $currentResponse["idResponses"];
                 $responderID = $currentResponse["responderID"];
+                $score = $currentResponse["score"];
 
                 $timePosted = $currentResponse["timePosted"];
                 $timestamp = strtotime($timePosted);
@@ -279,6 +280,7 @@
                 $responderUsername = $usersModel->getUsernameFromID($responderID);
                 $responderPfp = $usersModel->getProfilePicture($responderID);
                 $numVotes = $votesModel->getVoteCountFromResponseID($idResponses);
+                
 
                 if ($idResponses != $responseToEdit) { // regular view
 
@@ -322,7 +324,7 @@
 
                         <div class='textbuttongroup'>
 
-                        <span style = 'font-size:13'><span class=link'> Votes: $numVotes | <a href='../votes/votes.php?responseID=$idResponses&userID=$responderID&type=$type&promptID=$idPrompts'>$votestr</a></span></span>";
+                        <span style = 'font-size:13'><span class=link'> Votes: $numVotes | Score: $score | <a href='../votes/votes.php?responseID=$idResponses&userID=$responderID&type=$type&promptID=$idPrompts'>$votestr</a></span></span>";
 
                         if ($uid==$responderID) {
 

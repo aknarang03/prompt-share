@@ -58,7 +58,7 @@ class VotesModel {
     
     function listVotes($responseID) {
         try {
-            $stmt = $this->db->query("SELECT v.idVotes, v.feedback, v.voterID, v.responseID
+            $stmt = $this->db->query("SELECT v.idVotes, v.feedback, v.voterID, v.responseID, v.voteType
                 FROM votes v
                 JOIN responses r ON r.idResponses = v.responseID
                 WHERE v.responseID = '$responseID'"
