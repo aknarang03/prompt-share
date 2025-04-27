@@ -1,3 +1,1 @@
 # Prompt Share
-
-Will be hosted soon...
